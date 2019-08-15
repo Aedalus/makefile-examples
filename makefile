@@ -1,11 +1,17 @@
-.ONESHELL:
-.DEFAULT_GOAL := help
+include ./makefiles/globals.mk
 
-export ROOT_DIR=$(CURDIR)
-export DOCKER_REPO=github
-
+# ------------------------------------------------------------------------------
+# SETUP MODULES
+# ------------------------------------------------------------------------------
+# Use this if you don't care about sub-module order
 MODULES=$(dir $(wildcard */makefile))
 
+# Use this if it matters which order sub-modules build/deploy in
+# MODULES = sample-ui sample-docker
+
+# ------------------------------------------------------------------------------
+# DECLARE RULES
+# ------------------------------------------------------------------------------
 .PHONY: clean
 clean: ## Call the 'clean' target on all sub-modules
 	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
@@ -22,13 +28,17 @@ build: ## Call the 'build' target on all sub-modules
 test: ## Call the 'test' target on all sub-modules
 	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
 
+.PHONY: plan
+plan: ## Call the 'plan' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
+
 .PHONY: publish
 publish: ## Call the 'publish' target on all sub-modules
 	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
 
+.PHONY: destroy
+destroy: ## Call the 'destroy' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
+
 .PHONY: dev-all
 dev-all: lint build test
-
-.PHONY : help
-help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

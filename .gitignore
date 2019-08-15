@@ -11,6 +11,8 @@
 # production
 build
 node_modules
+.terraform
+*.tar
 
 # misc
 .DS_Store
