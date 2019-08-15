@@ -1,4 +1,4 @@
-include ../makefiles/globals.mk
+include ../globals.mk
 
 # --- init is called from a parent makefile ---
 init: ## Initializes the project

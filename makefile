@@ -1,4 +1,4 @@
-include ./makefiles/globals.mk
+include ./globals.mk
 
 # ------------------------------------------------------------------------------
 # SETUP MODULES
