@@ -1,6 +1,7 @@
 
 .ONESHELL:
 .DEFAULT_GOAL := help
+.SHELLFLAGS = -ec
 
 export GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 export GIT_HASH := $(shell git rev-parse HEAD)
